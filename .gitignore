@@ -1,0 +1,8 @@
+backend/mon_env/
+frontend/frontend_env/
+
+# Ignorer les checkpoints Jupyter
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+*.ipynb_checkpoint
+*checkpoint.ipynb
