@@ -40,19 +40,7 @@ st.markdown("""
 footer {visibility: hidden;}
 header {background: transparent;}
 
-/* --------- HEADER --------- */
-.main-header {
-    font-size: 2.6rem;
-    text-align: left;
-    margin: 0 0 0.5rem 0;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    background: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 25%, #06B6D4 50%, #10B981 75%, #EC4899 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 200% auto;
-    animation: gradientShift 8s ease infinite;
-}
+
 
 @keyframes gradientShift {
     0%, 100% { background-position: 0% 50%; }
@@ -74,9 +62,9 @@ header {background: transparent;}
 
 .sidebar-logo {
     text-align: center;
-    padding: 1.5rem 0 0.8rem 0;
-    font-weight: 700;
-    font-size: 1.2rem;
+    padding: 0rem 0 0.8rem 0;
+    font-weight: 900;
+    font-size: 2rem;
     color: #E2E8F0;
     background: linear-gradient(135deg, #818CF8, #3B82F6);
     -webkit-background-clip: text;
@@ -84,19 +72,17 @@ header {background: transparent;}
 }
 
 .sidebar-badge {
+    text-align: center;
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.15em;
     color: #6366F1;
-    text-align: center;
     margin-bottom: 2rem;
     padding: 0.4rem 1rem;
     background: rgba(99, 102, 241, 0.1);
     border-radius: 20px;
     display: inline-block;
-    width: auto;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 40px;
 }
 
 .sidebar-title {
@@ -140,7 +126,7 @@ header {background: transparent;}
 
 /* --------- SECTION TITLES --------- */
 .sub-header {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     font-weight: 700;
     color: #F1F5F9;
     margin-bottom: 1rem;
@@ -148,13 +134,15 @@ header {background: transparent;}
     padding-bottom: 0.5rem;
 }
 
+
+.main-header::after,
 .sub-header::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 60px;
-    height: 3px;
+    width: 100px;
+    height: 5px;
     background: linear-gradient(90deg, #8B5CF6, #3B82F6);
     border-radius: 2px;
 }
@@ -191,8 +179,6 @@ header {background: transparent;}
 
 
 
-
-
 /* --------- BOUTONS --------- */
 .stButton>button {
     background: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%);
@@ -213,6 +199,7 @@ header {background: transparent;}
 
 .stButton>button::before {
     content: '';
+    color: #FFFFFF;
     position: absolute;
     top: 0;
     left: -100%;
@@ -223,11 +210,13 @@ header {background: transparent;}
 }
 
 .stButton>button:hover::before {
+    color: #FFFFFF;
     left: 100%;
 }
 
 .stButton>button:hover {
     transform: translateY(-2px);
+    color: #FFFFFF;
     box-shadow: 
         0 8px 30px rgba(99, 102, 241, 0.4),
         0 0 0 1px rgba(255, 255, 255, 0.1);
@@ -236,6 +225,7 @@ header {background: transparent;}
 
 .stButton>button:active {
     transform: translateY(0);
+    color: #FFFFFF;
     box-shadow: 
         0 2px 10px rgba(99, 102, 241, 0.3),
         0 0 0 1px rgba(255, 255, 255, 0.05);
@@ -299,25 +289,32 @@ header {background: transparent;}
 </style>
 """, unsafe_allow_html=True)
 
+# Initialisation de la page si elle n'existe pas
+if "page" not in st.session_state:
+    st.session_state["page"] = "🏠 Accueil"
 
-# 🧭 Sidebar
+# Sidebar
 with st.sidebar:
-    st.markdown("<div class='sidebar-logo'>Sales Forecast Studio</div>", unsafe_allow_html=True)
+    st.markdown("<div class='sidebar-logo'>Sales Forecast</div>", unsafe_allow_html=True)
     st.markdown("<div class='sidebar-badge'>Prophet • Time Series</div>", unsafe_allow_html=True)
 
     st.markdown("<div class='sidebar-title'>Navigation</div>", unsafe_allow_html=True)
-    page = st.radio(
+    st.session_state["page"] = st.radio(
         "",
-        ["🏠 Accueil", "📊 Prédiction Automatique", "📁 Upload CSV", "⚙️ Paramètres Avancés"]
+        ["🏠 Accueil", "📊 Prédiction Automatique", "📁 Upload CSV", "⚙️ Paramètres Avancés"],
+        index=["🏠 Accueil", "📊 Prédiction Automatique", "📁 Upload CSV", "⚙️ Paramètres Avancés"].index(st.session_state["page"])
     )
 
     st.markdown("---")
     st.markdown("<div class='sidebar-title'>À propos</div>", unsafe_allow_html=True)
     st.info(
-        "Application de prévision de ventes basée sur Prophet, avec visualisations interactives et métriques de performance."
+        "Application de prévision de ventes basée sur Prophet, avec visualisations interactives."
     )
 
-# 🔌 Fonctions utilitaires
+# Page actuelle
+page = st.session_state["page"]
+
+# Fonctions utilitaires
 def check_api_connection():
     try:
         response = requests.get(f"{API_URL}/health")
@@ -344,9 +341,9 @@ def display_metrics(metrics_data):
                 value=f"{metrics_data.get('R2', 0):.2f}"
             )
 
-# 🏠 Page d'accueil
+# Page d'accueil
 if page == "🏠 Accueil":
-    st.markdown("<h1 class='main-header'>📊 Dashboard de Prédiction des Ventes</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 class='main-header'>Dashboard de Prédiction des Ventes</h1>", unsafe_allow_html=True)
     st.markdown(
         "<div class='main-subtitle'>Anticipez vos ventes, sécurisez vos décisions et explorez vos scénarios en quelques clics.</div>",
         unsafe_allow_html=True
@@ -420,6 +417,7 @@ if page == "🏠 Accueil":
                 </div>
             </div>
         ''', unsafe_allow_html=True)
+    
     with col2:
         st.markdown('''
         <div class="metric-card" style="
@@ -539,9 +537,9 @@ if page == "🏠 Accueil":
         st.session_state["page"] = "📊 Prédiction Automatique"
         st.experimental_rerun()
 
-# 📊 Page de prédiction automatique
+# Page de prédiction automatique
 elif page == "📊 Prédiction Automatique":
-    st.markdown("<h2 class='sub-header'>Prédiction Automatique des 3 Prochains Mois</h2>", unsafe_allow_html=True)
+    st.markdown("<h1 class='sub-header'>Prédiction Automatique des 3 Prochains Mois</h1>", unsafe_allow_html=True)
     st.markdown(
         "<div class='section-caption'>Lancez une prévision complète basée sur vos données historiques déjà configurées côté backend.</div>",
         unsafe_allow_html=True
@@ -637,7 +635,7 @@ elif page == "📊 Prédiction Automatique":
             except Exception as e:
                 st.error(f"Erreur: {str(e)}")
 
-# 📁 Page upload CSV
+# Page upload CSV
 elif page == "📁 Upload CSV":
     st.markdown("<h2 class='sub-header'>Prédiction à partir de fichier CSV</h2>", unsafe_allow_html=True)
     st.markdown(
@@ -790,9 +788,7 @@ st.markdown("<hr>", unsafe_allow_html=True)
 st.markdown(
     """
     <div class='custom-footer'>
-        Dashboard de Prédiction des Ventes • Propulsé par Prophet • 
-        <a href='#'>Documentation</a> • 
-        <a href='#'>Support</a>
+        Dashboard de Prédiction des Ventes • Propulsé par Prophet • Développé par ZOUAK Douae & EL HRIOUI Chahd
     </div>
     """,
     unsafe_allow_html=True

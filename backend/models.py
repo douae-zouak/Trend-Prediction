@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+# Un garde-fou automatique pour tes entrées et sorties
 from datetime import datetime
 from typing import Optional, List
 import pandas as pd

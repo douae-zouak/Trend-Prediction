@@ -24,10 +24,16 @@ def add_regressors(df, include_target=False):
     df['is_month_start'] = (df['ds'].dt.day <= 7).astype(int)
     df['is_month_end'] = (df['ds'].dt.day >= 24).astype(int)
     
-    # Ces colonnes nécessitent la variable cible
+    # Ces colonnes nécessitent la variable cible : Moving Averages & Lags
     if include_target and 'y' in df.columns:
+        # Lissent la série
+        # Réduisent les pics/bruits
+        # la tendance courte durée
         df['ma_7'] = df['y'].rolling(7, min_periods=1).mean()
+        # la tendance long terme
         df['ma_30'] = df['y'].rolling(30, min_periods=1).mean()
+        # Permet au modèle de comprendre les patterns mensuels.
+        # Donne la valeur d’il y a 7 jours.
         df['lag_7'] = df['y'].shift(7)
         df['lag_30'] = df['y'].shift(30)
         

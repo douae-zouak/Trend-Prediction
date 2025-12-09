@@ -33,9 +33,9 @@ app.add_middleware(
 # Charger le modèle
 try:
     model = joblib.load("prophet_model.pkl")
-    print("✅ Modèle chargé avec succès")
+    print("Modèle chargé avec succès")
 except Exception as e:
-    print(f"❌ Erreur lors du chargement du modèle: {e}")
+    print(f"Erreur lors du chargement du modèle: {e}")
     model = None
 
 @app.get("/")
