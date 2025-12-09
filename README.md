@@ -51,7 +51,7 @@ Les principales étapes du nettoyage :
 
 ---
 
-## 🔎 3. Exploratory Data Analysis
+## 3. Exploratory Data Analysis
 
 Les analyses exploratoires ont mis en évidence :
 
@@ -170,12 +170,29 @@ git clone [https://github.com/your-username/sales-forecasting](https://github.co
 ### 2. Installer les dépendances
 cd backend
 pip install -r requirements.txt
+**Lancer le backend**
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 
 cd frontend
 pip install -r requirements.txt
+**Lancer l'application Streamlit**
 streamlit run app.py
 
 
+## 9. Structure du Projet
+
+├── data/
+│   ├── orders.csv
+│   ├── products.csv
+├── notebook/
+│   ├── EDA.ipynb
+│   ├── Modeling.ipynb
+├── models/
+│   ├── prophet_model.pkl
+│   ├── tbats_model.pkl
+├── app/
+│   ├── app.py
+├── README.md
+└── requirements.txt
 
 
