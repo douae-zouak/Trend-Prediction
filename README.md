@@ -167,32 +167,25 @@ Fonctionnalités de l'interface :
 ### 1. Cloner le projet
 git clone [https://github.com/your-username/sales-forecasting](https://github.com/douae-zouak/Trend-Prediction)
 
-### 2. Installer les dépendances
+### 2. Installer les dépendances backend
+
 cd backend
+
 pip install -r requirements.txt
+
 **Lancer le backend**
+
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 
+### 3. Installer les dépendances frontend
+
 cd frontend
+
 pip install -r requirements.txt
+
 **Lancer l'application Streamlit**
+
 streamlit run app.py
 
-
-## 9. Structure du Projet
-
-├── data/
-│   ├── orders.csv
-│   ├── products.csv
-├── notebook/
-│   ├── EDA.ipynb
-│   ├── Modeling.ipynb
-├── models/
-│   ├── prophet_model.pkl
-│   ├── tbats_model.pkl
-├── app/
-│   ├── app.py
-├── README.md
-└── requirements.txt
 
 
